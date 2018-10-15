@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(draco C CXX)
 
+option(local_user_install "set a local install path" 1)
+if(local_user_install)
+	IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+		set(CMAKE_INSTALL_PREFIX "$ENV{LOCAL_CMAKE_INSTALL}/${CMAKE_SYSTEM_NAME}" CACHE PATH "For Android to find" FORCE)
+	ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+endif()
+
 set(draco_root "${CMAKE_CURRENT_SOURCE_DIR}")
 set(draco_src_root "${draco_root}/src/draco")
 set(draco_build_dir "${CMAKE_BINARY_DIR}")
