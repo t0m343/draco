@@ -949,6 +949,7 @@ else ()
               $<TARGET_OBJECTS:draco_animation_dec>
               $<TARGET_OBJECTS:draco_point_cloud>
               $<TARGET_OBJECTS:draco_points_dec>)
+  target_include_directories(dracodec INTERFACE "${draco_src_root}/.." "${CMAKE_BINARY_DIR}")
   add_library(dracoenc
               ${draco_version_sources}
               $<TARGET_OBJECTS:draco_attributes>
