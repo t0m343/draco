@@ -949,7 +949,6 @@ else ()
               $<TARGET_OBJECTS:draco_animation_dec>
               $<TARGET_OBJECTS:draco_point_cloud>
               $<TARGET_OBJECTS:draco_points_dec>)
-  target_include_directories(dracodec INTERFACE "${draco_src_root}/.." "${CMAKE_BINARY_DIR}")
   add_library(dracoenc
               ${draco_version_sources}
               $<TARGET_OBJECTS:draco_attributes>
@@ -998,7 +997,9 @@ else ()
               $<TARGET_OBJECTS:draco_point_cloud>
               $<TARGET_OBJECTS:draco_points_dec>
               $<TARGET_OBJECTS:draco_points_enc>)
-  if (BUILD_UNITY_PLUGIN)
+  
+      target_include_directories(draco INTERFACE "${CMAKE_CURRENT_BINARY_DIR}/include" "${CMAKE_BINARY_DIR}")
+ if (BUILD_UNITY_PLUGIN)
     add_library(dracodec_unity
                 MODULE
                 ${draco_version_sources}
@@ -1120,6 +1121,8 @@ else ()
   file(GLOB_RECURSE draco_headers RELATIVE ${draco_root}/src/draco "*.h")
   foreach (filename ${draco_headers})
     get_filename_component(file_directory ${filename} DIRECTORY)
+    file(COPY src/draco/${filename} DESTINATION
+	    "${CMAKE_CURRENT_BINARY_DIR}/include/draco/${file_directory}")
     install(FILES src/draco/${filename} DESTINATION
             "${CMAKE_INSTALL_PREFIX}/include/draco/${file_directory}")
   endforeach()
